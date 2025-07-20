@@ -29,7 +29,6 @@ app.get('/', (req, res) => {
     });
 });
 
-// GET /pricing - Fetch dynamic pricing from Oracle
 app.get('/pricing', async (req, res) => {
     try {
         console.log('[pricing] Fetching pricing data from Oracle...');
@@ -127,8 +126,8 @@ function transformPricingData(oracleData) {
     const discountPercentage = parseInt(data.discount_percentage || data.DISCOUNT_PERCENTAGE || 25);
     
     // Calculate yearly prices with discount
-    const yearlyPerProduct = Math.round(monthlyPerProduct * 12 * (1 - discountPercentage / 100));
-    const yearlyBulkUpdate = Math.round(monthlyBulkUpdate * 12 * (1 - discountPercentage / 100));
+    const yearlyPerProduct = +(monthlyPerProduct * 12 * (1 - discountPercentage / 100)).toFixed(2);
+    const yearlyBulkUpdate = +(monthlyBulkUpdate * 12 * (1 - discountPercentage / 100)).toFixed(2); 
     
     return {
         per_product: {
@@ -141,7 +140,7 @@ function transformPricingData(oracleData) {
         },
         discount_percentage: discountPercentage,
         promo_text: data.promo_text || data.PROMO_TEXT || '',
-        promo_active: (data.promo_active || data.PROMO_ACTIVE || 'N') === 'Y'
+		promo_active: ['Y', 'true', true].includes(data.promo_active || data.PROMO_ACTIVE)
     };
 }
 
