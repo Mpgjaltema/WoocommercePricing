@@ -131,12 +131,12 @@ function transformPricingData(oracleData) {
     
     return {
         per_product: {
-            monthly: monthlyPerProduct,
-            yearly: yearlyPerProduct
+            '1 month': monthlyPerProduct,
+            '12 months': yearlyPerProduct
         },
         bulk_update: {
-            monthly: monthlyBulkUpdate,
-            yearly: yearlyBulkUpdate
+            '1 month': monthlyBulkUpdate,
+            '12 months': yearlyBulkUpdate
         },
         discount_percentage: discountPercentage,
         promo_text: data.promo_text || data.PROMO_TEXT || '',
@@ -173,12 +173,12 @@ function getExpectedAmount(planType, billingType, pricingData) {
 function getFallbackPricing() {
     return {
         per_product: {
-            monthly: 99,
-            yearly: 891  // 99 * 12 * 0.75 (25% discount)
+            '1 month': 99,
+            '12 months': 891  
         },
         bulk_update: {
-            monthly: 349,
-            yearly: 3141 // 349 * 12 * 0.75 (25% discount)
+            '1 month': 349,
+            '12 months': 3141 
         },
         discount_percentage: 25,
         promo_text: '',
